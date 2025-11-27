@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Products_Your Business</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0e0e16; --card:#1b1b2d; --muted:#9ca3af; --accent:#4a6eff;
+  --accent2:#7c3aed; --text:#fff; --radius:12px; --maxw:1000px;
+}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;line-height:1.4}
+header{background:#151525;padding:20px;text-align:center;font-size:28px;font-weight:600;color:#9cc2ff}
+.container{max-width:var(--maxw);margin:24px auto;padding:16px}
+.card{background:var(--card);padding:16px;border-radius:var(--radius);border:1px solid #2a2a40;transition:0.3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 0 15px var(--accent)}
+.grid{display:grid;gap:14px}
+.services-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.team-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+h2{margin:0 0 10px 0;color:var(--accent);text-align:center}
+.price{color:#9cc2ff;font-weight:700;margin-top:8px}
+button{cursor:pointer;border:none;border-radius:8px;padding:10px 14px;font-weight:600;transition:.3s}
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff}
+.btn:hover{box-shadow:0 0 10px var(--accent)}
+#chatToggle{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#fff;padding:18px;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 0 12px var(--accent);z-index:9999}
+#chatWidget{position:fixed;bottom:90px;right:20px;width:320px;background:var(--card);border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5);display:none;flex-direction:column;overflow:hidden;z-index:9999}
+.chat-head{background:linear-gradient(90deg,var(--accent),var(--accent2));padding:10px;color:#000;font-weight:700;text-align:center}
+.chat-body{padding:12px;height:240px;overflow:auto;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
+.chat-input{display:flex;padding:10px;gap:8px;background:var(--card)}
+.chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid #222;background:#0b0b11;color:var(--text)}
+.muted{color:var(--muted)}
+.invoice-list{max-height:200px;overflow:auto}
+.invoice-item{background:#0b1220;padding:10px;border-radius:8px;margin-bottom:8px;border:1px solid #111}
+#paymentModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:9999}
+#paymentModalContent{background:var(--card);padding:20px;border-radius:12px;width:300px;display:flex;flex-direction:column;gap:10px;}
+</style>
+</head>
+<body>
+<header>Digital Products_Your Business</header>
+<div class="container">
+
+<!-- Services -->
+<section class="card">
+<h2>Our Services & Differences</h2>
+<div class="grid services-grid">
+  <div class="card">
+    <h3>Normal App</h3>
+    <p>Basic mobile application.</p>
+    <p class="price">Price: 500 EGP<br>Deposit: 250 EGP</p>
+    <p><b>Features:</b> Simple UI, basic functions, budget-friendly.</p>
+  </div>
+  <div class="card">
+    <h3>Premium App</h3>
+    <p>Advanced mobile application.</p>
+    <p class="price">Price: 1000 EGP<br>Deposit: 500 EGP</p>
+    <p><b>Features:</b> Professional design, full features, admin panel, push notifications, user login, analytics.</p>
+  </div>
+  <div class="card">
+    <h3>Normal Website</h3>
+    <p>Responsive website for businesses.</p>
+    <p class="price">Price: 700 EGP<br>Deposit: 350 EGP</p>
+    <p><b>Features:</b> Simple pages, standard design, suitable for small businesses.</p>
+  </div>
+  <div class="card">
+    <h3>Premium Website</h3>
+    <p>High-end website with full control panel.</p>
+    <p class="price">Price: 1400 EGP<br>Deposit: 700 EGP</p>
+    <p><b>Features:</b> Professional design, multi-page, admin panel, SEO optimized, multimedia support, fully customizable.</p>
+  </div>
+</div>
+</section>
+
+<!-- Team & Designer Info -->
+<section class="card" style="margin-top:16px">
+<h2>Our Team & Designer Info</h2>
+<div class="grid team-grid">
+  <div class="card">
+    <h3>Jody Mohamed</h3>
+    <p>Designer & Manager</p>
+    <p>WhatsApp: +20 1018193234</p>
+    <p>Email: jm9588325@gmail.com</p>
+  </div>
+  <div class="card"><h3>Maha</h3><p>Assistant</p></div>
+  <div class="card"><h3>Omar</h3><p>Full-Stack Dev</p></div>
+  <div class="card"><h3>Sara</h3><p>Sales Manager</p></div>
+  <div class="card"><h3>Ramy</h3><p>Graphics</p></div>
+</div>
+</section>
+
+<!-- Order -->
+<section class="card" style="margin-top:16px">
+<h2>Place an Order</h2>
+<form id="orderForm" style="display:grid;gap:10px">
+<input type="text" id="ord_name" placeholder="Your Name" required>
+<input type="email" id="ord_email" placeholder="Your Email" required>
+<input type="text" id="ord_phone" placeholder="Phone Number" required>
+<select id="ord_service">
+  <option value="Normal App">Normal App — 500 EGP</option>
+  <option value="Premium App">Premium App — 1000 EGP</option>
+  <option value="Normal Website">Normal Website — 700 EGP</option>
+  <option value="Premium Website">Premium Website — 1400 EGP</option>
+</select>
+<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">
+  <button type="button" class="btn" onclick="openPaymentForm('Vodafone Cash')">Vodafone Cash</button>
+  <button type="button" class="btn" onclick="openPaymentForm('PayPal')">PayPal</button>
+  <button type="button" class="btn" onclick="openPaymentForm('NFC')">NFC</button>
+  <button type="button" class="btn" onclick="openPaymentForm('Card')">Card</button>
+</div>
+<textarea id="ord_details" rows="3" placeholder="Order Details"></textarea>
+</form>
+<div id="orderMsg" class="muted" style="margin-top:10px"></div>
+</section>
+
+<!-- Invoices -->
+<section class="card" style="margin-top:16px">
+<h2>Invoices</h2>
+<div class="invoice-list" id="invoiceList"></div>
+</section>
+
+<!-- Payment Modal -->
+<div id="paymentModal">
+  <div id="paymentModalContent">
+    <h3 id="payTitle">Payment</h3>
+    <input id="payInput1" placeholder="Enter Info" />
+    <input id="payInput2" placeholder="Extra Info (optional)" />
+    <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
+    <button class="btn" style="background:#777;" onclick="closePaymentForm()">Cancel</button>
+  </div>
+</div>
+
+<!-- Chatbot -->
+<button id="chatToggle">💬</button>
+<div id="chatWidget">
+<div class="chat-head">AskBot</div>
+<div class="chat-body" id="chatBody"></div>
+<div class="chat-input">
+<input id="chatInput" placeholder="Type a message...">
+<button id="chatSend" class="btn">Send</button>
+</div>
+</div>
+
+<script>
+/* Utils */
+function uid(len=6){ return Math.floor(Math.random()*Math.pow(10,len)) }
+function nowISO(){ return new Date().toISOString() }
+
+/* Orders/Invoices */
+function readOrder(){
+  return {
+    id:"ORD-"+uid(6),
+    name:document.getElementById('ord_name').value.trim(),
+    email:document.getElementById('ord_email').value.trim(),
+    phone:document.getElementById('ord_phone').value.trim(),
+    service:document.getElementById('ord_service').value,
+    details:document.getElementById('ord_details').value.trim(),
+    createdAt:nowISO(),
+    status:"Unpaid"
+  };
+}
+
+function saveInvoice(order){
+  const priceMap={"Normal App":500,"Premium App":1000,"Normal Website":700,"Premium Website":1400};
+  const depositMap={"Normal App":250,"Premium App":500,"Normal Website":350,"Premium Website":700};
+  const inv={
+    invoiceId:"INV-"+uid(6),
+    orderId:order.id,
+    name:order.name,
+    email:order.email,
+    phone:order.phone,
+    service:order.service,
+    price:priceMap[order.service],
+    deposit:depositMap[order.service],
+    status:order.status,
+    createdAt:order.createdAt
+  };
+  const all=JSON.parse(localStorage.getItem("jm_invoices")||"[]");
+  all.unshift(inv);
+  localStorage.setItem("jm_invoices",JSON.stringify(all));
+  renderInvoices();
+  return inv;
+}
+
+function renderInvoices(){
+  const all=JSON.parse(localStorage.getItem("jm_invoices")||"[]");
+  const el=document.getElementById("invoiceList");
+  el.innerHTML=all.length?all.map(i=>`
+    <div class="invoice-item">
+      <b>${i.invoiceId}</b> — ${i.service} — ${i.status}<br>
+      ${i.name} • ${i.phone} • ${i.email}<br>
+      Price: ${i.price} EGP • Deposit: ${i.deposit} EGP
+      <button class="btn" onclick="downloadInvoice('${i.invoiceId}')">Download PDF</button>
+    </div>`).join(""):"<div class='muted'>No invoices yet.</div>";
+}
+
+/* Payment Modal Logic */
+let currentPaymentMethod = '';
+function openPaymentForm(method){
+  currentPaymentMethod = method;
+  document.getElementById('payTitle').innerText = `Payment — ${method}`;
+  if(method==='Vodafone Cash'){
+    document.getElementById('payInput1').placeholder = "Enter Vodafone Number";
+    document.getElementById('payInput2').placeholder = "Transaction ID";
+  } else if(method==='PayPal'){
+    document.getElementById('payInput1').placeholder = "Enter PayPal Email";
+    document.getElementById('payInput2').placeholder = "Transaction ID";
+  } else if(method==='NFC'){
+    document.getElementById('payInput1').placeholder = "Enter NFC Terminal ID";
+    document.getElementById('payInput2').placeholder = "Transaction Code";
+  } else if(method==='Card'){
+    document.getElementById('payInput1').placeholder = "Card Number";
+    document.getElementById('payInput2').placeholder = "Expiry MM/YY";
+  }
+  document.getElementById('paymentModal').style.display='flex';
+}
+
+function closePaymentForm(){ document.getElementById('paymentModal').style.display='none'; }
+
+function confirmPayment(){
+  const info1 = document.getElementById('payInput1').value.trim();
+  const info2 = document.getElementById('payInput2').value.trim();
+  if(!info1){ alert("Please fill the required field!"); return; }
+  closePaymentForm();
+  // حفظ الفاتورة كمدفوع
+  const order = readOrder();
+  order.status="Paid";
+  const inv = saveInvoice(order);
+  alert(`Payment via ${currentPaymentMethod} confirmed.\nInfo: ${info1} ${info2}\nInvoice ${inv.invoiceId} is Paid ✅`);
+}
+
+/* Download PDF */
+function downloadInvoice(invId){
+  const all=JSON.parse(localStorage.getItem("jm_invoices")||"[]");
+  const inv=all.find(i=>i.invoiceId===invId);
+  if(!inv){alert("Invoice not found");return;}
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(16); doc.text("Digital Products_Your Business",20,20);
+  doc.setFontSize(12);
+  doc.text(`Invoice ID: ${inv.invoiceId}`,20,35);
+  doc.text(`Order ID: ${inv.orderId}`,20,45);
+  doc.text(`Name: ${inv.name}`,20,55);
+  doc.text(`Email: ${inv.email}`,20,65);
+  doc.text(`Phone: ${inv.phone}`,20,75);
+  doc.text(`Service: ${inv.service}`,20,85);
+  doc.text(`Price: ${inv.price} EGP`,20,95);
+  doc.text(`Deposit: ${inv.deposit} EGP`,20,105);
+  doc.text(`Status: ${inv.status}`,20,115);
+  doc.text(`Date: ${inv.createdAt}`,20,125);
+  const img = new Image();
+  img.src="stamp.png"; // ضع صورة الختم هنا
+  img.onload=function(){doc.addImage(img, 'PNG', 130, 10, 60, 60); doc.save(`${inv.invoiceId}.pdf`);}
+}
+
+/* Chatbot */
+const chatToggle=document.getElementById("chatToggle");
+const chatWidget=document.getElementById("chatWidget");
+const chatBody=document.getElementById("chatBody");
+const chatInput=document.getElementById("chatInput");
+const chatSend=document.getElementById("chatSend");
+chatToggle.onclick=()=>{chatWidget.style.display=(chatWidget.style.display==='flex'?'none':'flex');if(chatWidget.style.display==='flex'&&chatBody.innerHTML.trim()==='') welcomeMsg();}
+chatSend.onclick=sendChat; chatInput.onkeydown=e=>{if(e.key==='Enter') sendChat();}
+function addChat(role,text){const div=document.createElement("div");div.style.marginBottom="8px";div.innerHTML=`<div style="font-size:12px;color:var(--muted)">${role}</div><div style="margin-top:4px">${text}</div>`;chatBody.appendChild(div);chatBody.scrollTop=chatBody.scrollHeight;}
+function welcomeMsg(){addChat('AskBot','Hello 👋 — I am your Digital Assistant. I can show prices, invoices, and help with orders.');}
+function sendChat(){const t=chatInput.value.trim();if(!t)return;addChat('You',t);chatInput.value='';addChat('AskBot','Typing...');setTimeout(()=>{chatBody.lastChild.remove();const tl=t.toLowerCase();const all=JSON.parse(localStorage.getItem("jm_invoices")||"[]");if(tl.includes('price')||tl.includes('cost')) addChat('AskBot','Our prices: Normal App 500, Premium App 1000, Normal Website 700, Premium Website 1400 (EGP).'); else if(tl.includes('invoice')||tl.includes('bill')){if(all.length) addChat('AskBot',all.map(i=>`${i.invoiceId} — ${i.service} — ${i.status}`).join('\n'));else addChat('AskBot','No invoices yet.');} else addChat('AskBot','I do not know. You can contact the manager Jody Mohamed at Gmail: jm9588325@gmail.com or WhatsApp: +20 1018193234');},500);}
+renderInvoices(); welcomeMsg();
+</script>
+</body>
+</html>
